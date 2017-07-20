@@ -8,15 +8,11 @@ var lessMiddleware = require('less-middleware');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var api = require('./routes/apis');
-
-router.use(function(req, res, next) {
-    // do logging
-    console.log('');
-    next(); // make sure we go to the next routes and don't stop here
-});
+var api = require('./routes/api');
 
 var app = express();
+
+var port = process.env.PORT || 8080;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -52,5 +48,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(port);
 
 module.exports = app;
