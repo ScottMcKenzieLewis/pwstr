@@ -4,7 +4,7 @@ var zxcvbn = require('zxcvbn');
 
 router.post('/checkpasswordstrength', function(req, res) {
     req.checkBody('password', 'Password cannot be empty.').notEmpty();	
-	var errors = req.validationErrors();
+	var errors = req.validationResult();
 	if (!errors) {
 		req.sanitize('password').escape();
 	    var results = zxcvbn(req.body.password);  

@@ -5,10 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
-var expressValidator = require('express-validator');
+var helmet = require('helmet');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var api = require('./routes/api');
 
 var app = express();
@@ -24,13 +23,12 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator());
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(helmet());
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/api', api);
 
 // catch 404 and forward to error handler
