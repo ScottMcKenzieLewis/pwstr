@@ -6,9 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 var helmet = require('helmet');
+var expressValidator = require('express-validator')
 
 var index = require('./routes/index');
-var api = require('./routes/api');
+var apiV1 = require('./routes/apiV1');
+var apiV2 = require('./routes/apiV2');
+
 
 var app = express();
 
@@ -23,13 +26,17 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 
+
 app.use('/', index);
-app.use('/api', api);
+app.use('/api/v1', apiV1);
+app.use('/api/v2', apiV2)
+app.use('/api', apiV2);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,5 @@
+{
+    "dbConfig": {
+        "url": "mongodb://localhost/pwstr"
+    }
+}
