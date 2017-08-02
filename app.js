@@ -1,21 +1,21 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var lessMiddleware = require('less-middleware');
-var helmet = require('helmet');
-var expressValidator = require('express-validator')
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const lessMiddleware = require('less-middleware');
+const helmet = require('helmet');
+const expressValidator = require('express-validator')
 
-var index = require('./routes/index');
-var apiV1 = require('./routes/apiV1');
-var apiV2 = require('./routes/apiV2');
+const index = require('./routes/index');
+const apiV1 = require('./routes/apiV1');
+const apiV2 = require('./routes/apiV2');
 
 
-var app = express();
+const app = express();
 
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +40,7 @@ app.use('/api', apiV2);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

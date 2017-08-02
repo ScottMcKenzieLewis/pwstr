@@ -1,14 +1,14 @@
-var express = require('express');
-var zxcvbn = require('zxcvbn');
-var mongoose = require('mongoose');
+const express = require('express');
+const zxcvbn = require('zxcvbn');
+const mongoose = require('mongoose');
 
-var apiV2 = express.Router();
+const apiV2 = express.Router();
 
 apiV2.post("/checkpasswordstrength", checkPasswordStrength);
 
 function checkPasswordStrength(req, res) {
     req.checkBody('password', 'Password cannot be empty.').notEmpty();	
-	var errors = req.validationErrors();
+	let errors = req.validationErrors();
 	if (!errors) {
 		req.sanitize('password').escape();
 	    var results = zxcvbn(req.body.password);  
