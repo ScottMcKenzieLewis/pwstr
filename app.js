@@ -6,12 +6,22 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
 const helmet = require('helmet');
-const expressValidator = require('express-validator')
+const expressValidator = require('express-validator');
+const commandLineArgs = require('command-line-args');
+const getUsage = require('command-line-usage');
+ 
+const optionDefinitions = [
+  { name: 'verbose', alias: 'v' },
+  { name: 'help', alias: 'h' },
+  { name: 'db', alias: 'd' }, 
+  { name: 'server', alias: 's' }
+];
+
+const options = commandLineArgs(optionDefinitions);
 
 const index = require('./routes/index');
 const apiV1 = require('./routes/apiV1');
 const apiV2 = require('./routes/apiV2');
-
 
 const app = express();
 
@@ -32,8 +42,8 @@ app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 
-
 app.use('/', index);
+
 app.use('/api/v1', apiV1);
 app.use('/api/v2', apiV2)
 app.use('/api', apiV2);
@@ -56,6 +66,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(port);
+if (options.server) {
+  app.listen(port);
+}
 
 module.exports = app;
